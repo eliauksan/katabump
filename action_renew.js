@@ -430,12 +430,12 @@ async function attemptTurnstileCdp(page) {
             // --- Renew 逻辑 ---
             let renewSuccess = false;
             // 2. 一个扁平化的主循环：尝试 Renew 整个流程 (最多 20 次)
-            for (let attempt = 1; attempt <= 20; attempt++) {
+            for (let attempt = 1; attempt <= 1; attempt++) {
                 let hasCaptchaError = false;
 
                 // 1. 如果是重试 (attempt > 1)，说明之前失败了或者刚刷新完页面
                 // 我们直接开始寻找 Renew 按钮
-                console.log(`\n[尝试 ${attempt}/20] 正在寻找 Renew 按钮...`);
+                console.log(`\n[尝试 ${attempt}/1] 正在寻找 Renew 按钮...`);
 
                 const renewBtn = page.getByRole('button', { name: 'Renew', exact: true }).first();
                 try {
@@ -462,10 +462,10 @@ async function attemptTurnstileCdp(page) {
                     // B. 找 Turnstile (小重试)
                     console.log('正在检查 Turnstile (使用 CDP 绕过)...');
                     let cdpClickResult = false;
-                    for (let findAttempt = 0; findAttempt < 30; findAttempt++) {
+                    for (let findAttempt = 0; findAttempt < 3; findAttempt++) {
                         cdpClickResult = await attemptTurnstileCdp(page);
                         if (cdpClickResult) break;
-                        console.log(`   >> [寻找尝试 ${findAttempt + 1}/30] 尚未找到 Turnstile 复选框...`);
+                        console.log(`   >> [寻找尝试 ${findAttempt + 1}/3] 尚未找到 Turnstile 复选框...`);
                         await page.waitForTimeout(1000);
                     }
 
